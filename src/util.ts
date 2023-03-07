@@ -1,10 +1,6 @@
-interface errorDetails {
-message: string
-name: string
-reason: string
-stack: string
-type: string
-}
+import { levelToString } from "./levels";
+import { errorDetails, LoggerEvent } from "./struct";
+
 /**
  * Returns details of an error.
  */
@@ -18,4 +14,21 @@ export function getErrorDetails(error:Error):errorDetails {
     }
   }
   return details as errorDetails;
+}
+
+export function defaultFormatter(event:LoggerEvent): string {
+  const {
+    context,
+    level,
+    logger,
+    message,
+    timestamp,
+  } = event;
+
+  let out = `${new Date(timestamp).toISOString()} ${levelToString(level)} [${logger}] : ${message}`;
+
+  if (context) {
+    out += ` ; ${JSON.stringify(context)}`;
+  }
+  return out;
 }

@@ -7,7 +7,7 @@ import Levels, {
   WARN,
 } from './levels';
 import consoleOutput from './outputs/consoleOutput';
-import { LoggerEvent, LoggerOptions } from './struct';
+import { LoggerContext, LoggerEvent, LoggerOptions } from './struct';
 import { getErrorDetails } from './util';
 
 
@@ -22,8 +22,8 @@ const defaultOptions:LoggerOptions = {
 
 class Logger {
   active: boolean
-  defaultContext: unknown
-  filter?: ((event:LoggerEvent)=>boolean)|null
+  defaultContext: LoggerContext|null
+  filter: ((event:LoggerEvent)=>boolean)|null
   level: Levels
   name: string
   outputs: ((event:LoggerEvent)=>void)[]
@@ -48,7 +48,7 @@ class Logger {
     this.name = opts.name == null ? `logger_${Date.now()}` : String(opts.name);
 
     // Set log outputs.
-    this.outputs = [].concat(opts.outputs || []);
+    this.outputs = opts.outputs;
 
     if (typeof this.outputs !== 'object' || !(this.outputs instanceof Array) || this.outputs.length === 0) {
       throw new Error('Logger outputs cannot be empty.');
@@ -57,22 +57,23 @@ class Logger {
 
   /**
    * Logs a debug message.
-   * @param context
    */
-  debug(message:string, context = undefined) {
+  debug(message:string, context?:LoggerContext) {
     this.log(DEBUG, message, context);
   }
 
   /**
    * Logs an error message.
    */
-  error(messageOrError:string|Error, context = undefined) {
+  error(messageOrError:string|Error, context?:LoggerContext) {
     const ctx = context || {};
-    let message = messageOrError;
+    let message:string
 
     if (messageOrError instanceof Error) {
       message = messageOrError.message;
       ctx.error = getErrorDetails(messageOrError);
+    } else {
+      message = messageOrError
     }
     this.log(ERROR, message, ctx);
   }
@@ -80,13 +81,15 @@ class Logger {
   /**
    * Logs a fatal error message.
    */
-  fatal(messageOrError:string|Error, context = undefined) {
+  fatal(messageOrError:string|Error, context?:LoggerContext) {
     const ctx = context || {};
-    let message = messageOrError;
+    let message:string
 
     if (messageOrError instanceof Error) {
       message = messageOrError.message;
       ctx.error = getErrorDetails(messageOrError);
+    } else {
+      message = messageOrError
     }
     this.log(FATAL, message, ctx);
   }
@@ -108,7 +111,7 @@ class Logger {
   /**
    * Logs an informational message.
    */
-  info(message: string, context = undefined) {
+  info(message: string, context?:LoggerContext) {
     this.log(INFO, message, context);
   }
 
@@ -122,7 +125,7 @@ class Logger {
   /**
    * Logs a message with a certain level.
    */
-  log(level: Levels, message: string, context = undefined) {
+  log(level: Levels, message: string, context?:LoggerContext) {
     // Ignore if logger is not active or if log level is higher.
     if (!this.isActive() || level > this.level) {
       return;

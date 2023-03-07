@@ -6,41 +6,21 @@ import {
   WARN,
 } from '../levels';
 import { LoggerEvent } from '../struct';
-
-function defaultFormatter(event) {
-  const {
-    context,
-    level,
-    logger,
-    message,
-    timestamp,
-  } = event;
-
-  let out = `${new Date(timestamp).toISOString()} ${level.toUpperCase()} [${logger}] : ${message}`;
-
-  if (context) {
-    out += ` ; ${JSON.stringify(context)}`;
-  }
-  return out;
-}
+import { defaultFormatter } from '../util';
 
 /**
  * Logs events to console.
- * @param options
  */
-function consoleOutput(options = undefined): ((arg0: LoggerEvent) => void) {
+function consoleOutput(options? : { formatter?: (event: LoggerEvent) => string; }): ((arg0: LoggerEvent) => void) {
   const opts = { formatter: defaultFormatter, ...options };
-  const { entries, formatter } = opts;
+  const {formatter} = opts;
 
-  const harvest = (message:string) => {
-    entries.push(message);
-  };
-
-  const debug = entries ? harvest : console.debug || console.log;
-  const error = entries ? harvest : console.error || console.log;
-  const fatal = entries ? harvest : console.fatal || console.log;
-  const info = entries ? harvest : console.info || console.log;
-  const warn = entries ? harvest : console.warn || console.log;
+ 
+  const debug = console.debug ?? console.log;
+  const error = console.error ?? console.log;
+  const fatal = console.error ?? console.log;
+  const info = console.info ?? console.log;
+  const warn = console.warn ?? console.log;
 
   return (event) => {
     const { level } = event;
@@ -48,20 +28,17 @@ function consoleOutput(options = undefined): ((arg0: LoggerEvent) => void) {
     // Prepare output.
     let output = formatter(event);
 
-    if (!(output instanceof Array)) {
-      output = [output];
-    }
-
-    if (level === DEBUG) {
-      debug(...output);
-    } else if (level === INFO) {
-      info(...output);
-    } else if (level === WARN) {
-      warn(...output);
-    } else if (level === ERROR) {
-      error(...output);
-    } else if (level === FATAL) {
-      fatal(...output);
+    switch (level) {
+      case DEBUG:
+        debug(output)
+      case INFO:
+        info(output)
+      case WARN:
+        warn(output)
+      case ERROR:
+        error(output);
+      case FATAL:
+        fatal(output);
     }
   };
 }

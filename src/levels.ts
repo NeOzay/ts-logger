@@ -6,13 +6,24 @@ enum Levels {
   FATAL = 4,
 }
 export const DEBUG = Levels.DEBUG
-export const INFO = Levels. INFO 
-export const WARN = Levels. WARN 
+export const INFO = Levels.INFO
+export const WARN = Levels.WARN
 export const ERROR = Levels.ERROR
 export const FATAL = Levels.FATAL
 
-export function levelToString(level:Levels):string{
-  switch
+export function levelToString(level: Levels): "DEBUG"|"INFO"|"WARN"|"ERROR"|"FATAL" {
+  switch (level) {
+    case DEBUG:
+      return "DEBUG"
+    case INFO:
+      return "INFO"
+    case WARN:
+      return "WARN"
+    case ERROR:
+      return "ERROR"
+    case FATAL:
+      return "FATAL"
+  }
 }
 
 export default Levels
