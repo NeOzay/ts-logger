@@ -1,0 +1,14 @@
+{
+  "name": "ts-logger",
+  "version": "1.0.0",
+  "description": "a typescript logger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ozay",
+  "license": "ISC",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  }
+}
