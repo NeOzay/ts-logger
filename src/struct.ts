@@ -2,7 +2,7 @@ import Levels from "./levels"
 
 export interface LoggerOptions {
   active: true
-  defaultContext: object | null
+  defaultContext: LoggerContext | null
   filter: ((event: LoggerEvent) => boolean) | null
   level: Levels
   name: null
