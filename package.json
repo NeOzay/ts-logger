@@ -2,14 +2,14 @@
   "name": "ts-logger",
   "version": "1.0.0",
   "description": "a typescript logger",
-  "main": "./src/index.ts",
+  "main": "./dist/index.ts",
   "module": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ozay",
   "license": "ISC",
-  "dependencies": {
-    "ts-node": "^10.9.1"
+  "devDependencies": {
+    "typescript": "^4.9.5"
   }
 }
