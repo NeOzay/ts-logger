@@ -1,19 +1,20 @@
 import { levelToString } from "./levels";
 import { errorDetails, LoggerEvent } from "./struct";
 
+type TupleToUnion<T extends any[]> = T[number];
 /**
  * Returns details of an error.
  */
 export function getErrorDetails(error:Error):errorDetails {
-  const attributes = ['message', 'name', 'reason', 'stack', 'type'];
-  const details = {};
+  const attributes = ['message', 'name', 'stack'] as const;
+  const details:errorDetails = {};
 
   for (let i = 0; i < attributes.length; i += 1) {
     if (attributes[i] in error) {
       details[attributes[i]] = error[attributes[i]];
     }
   }
-  return details as errorDetails;
+  return details;
 }
 
 export function defaultFormatter(event:LoggerEvent): string {

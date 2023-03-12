@@ -22,8 +22,8 @@ const defaultOptions:LoggerOptions = {
 
 class Logger {
   active: boolean
-  defaultContext: LoggerContext|null
-  filter: ((event:LoggerEvent)=>boolean)|null
+  defaultContext?: LoggerContext|null
+  filter?: ((event:LoggerEvent)=>boolean)|null
   level: Levels
   name: string
   outputs: ((event:LoggerEvent)=>void)[]

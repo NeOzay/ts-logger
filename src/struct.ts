@@ -1,16 +1,16 @@
 import Levels from "./levels"
 
 export interface LoggerOptions {
-  active: true
-  defaultContext: LoggerContext | null
-  filter: ((event: LoggerEvent) => boolean) | null
+  active: boolean
+  defaultContext?: LoggerContext|null
+  filter?: ((event: LoggerEvent) => boolean)|null
   level: Levels
-  name: null
+  name?: string|null
   outputs: ((event: LoggerEvent) => void)[]
 };
 
 export interface LoggerEvent {
-  context?: LoggerContext
+  context?: LoggerContext|null
   level: Levels
   logger: string
   message: string
@@ -18,11 +18,9 @@ export interface LoggerEvent {
 }
 
 export interface errorDetails {
-  message: string
-  name: string
-  reason: string
-  stack: string
-  type: string
+  message?: string
+  name?: string
+  stack?: string
 }
 
 export interface LoggerContext {
