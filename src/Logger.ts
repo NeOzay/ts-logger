@@ -28,9 +28,9 @@ class Logger {
   name: string
   outputs: ((event:LoggerEvent)=>void)[]
   
-  constructor(options:LoggerOptions | null | undefined) {
+  constructor(options:Partial<LoggerOptions> | null | undefined) {
     // Use default options.
-    const opts:LoggerOptions = { ...defaultOptions, ...options };
+    const opts = { ...defaultOptions, ...options };
 
     // Set logger status.
     this.active = opts.active === true;
@@ -104,7 +104,7 @@ class Logger {
   /**
    * Returns the logger name.
    */
-  getName(): string | null {
+  getName(): string {
     return this.name;
   }
 

@@ -16,6 +16,7 @@
     "sourceMap": false,
     "baseUrl": "./",
     "declaration": true,
+    "declarationDir": "dist/types",
     "declarationMap": true,
     "strict": true,
     "esModuleInterop": true,
@@ -27,7 +28,7 @@
     "src/index.ts"
   ],
   "include": [
-    "./**/*.ts"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "node_modules",
