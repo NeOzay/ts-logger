@@ -23,7 +23,7 @@ const defaultOptions:LoggerOptions = {
 class Logger {
   active: boolean
   defaultContext?: LoggerContext|null
-  filter?: ((event:LoggerEvent)=>boolean)|null
+  filter?: LoggerOptions["filter"]
   level: Levels
   name: string
   outputs: ((event:LoggerEvent)=>void)[]
@@ -127,7 +127,7 @@ class Logger {
    */
   log(level: Levels, message: string, context?:LoggerContext) {
     // Ignore if logger is not active or if log level is higher.
-    if (!this.isActive() || level > this.level) {
+    if (!this.isActive() || level < this.level) {
       return;
     }
 
@@ -168,7 +168,7 @@ class Logger {
   /**
    * Logs a warning message.
    */
-  warn(message: string, context = undefined) {
+  warn(message: string, context?:LoggerContext) {
     this.log(WARN, message, context);
   }
 }

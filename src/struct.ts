@@ -1,11 +1,12 @@
 import Levels from "./levels"
 
+type filter = (event:LoggerEvent)=>(boolean|null|undefined)
 export interface LoggerOptions {
   active: boolean
   defaultContext?: LoggerContext|null
-  filter?: ((event: LoggerEvent) => boolean)|null
+  filter: filter|null
   level: Levels
-  name?: string|null
+  name: string|null
   outputs: ((event: LoggerEvent) => void)[]
 };
 
@@ -24,5 +25,5 @@ export interface errorDetails {
 }
 
 export interface LoggerContext {
-  [key: string]: any
+  [key: string|number|symbol]: any
 }

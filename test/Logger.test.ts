@@ -16,6 +16,7 @@ import {
 	WARN,
 } from '../src';
 import Logger from '../src/Logger'
+import { LoggerContext, LoggerEvent } from '../src/struct';
 
 describe('Logger', () => {
 	it('should be importable from package', () => {
@@ -48,20 +49,20 @@ describe('new Logger(options)', () => {
 	describe('with options.defaultContext', () => {
 		describe('with options.defaultContext = object', () => {
 			const createLoggerWithDefaultContext = () => {
-				const result:{
-					logger:Logger
-				} = {
-					logger: null,
-					defaultContext: { num: 42 },
-					ctx: null,
-				};
-				result.logger = new Logger({
+        let ctx:LoggerContext = {}
+        const defaultContext = { num: 42 }
+				const logger = new Logger({
 					active: true,
-					defaultContext: result.defaultContext,
+					defaultContext: defaultContext,
 					outputs: [(event) => {
-						result.ctx = event.context;
+					  result.ctx = event.context!;
 					}],
 				});
+        const result = {
+          logger,
+          ctx,
+          defaultContext
+        };
 				return result;
 			};
 
@@ -83,24 +84,25 @@ describe('new Logger(options)', () => {
 	describe('with options.filter', () => {
 		describe('with options.filter = function', () => {
 			const createLogger = () => {
-				const result = {
-					isCalled: false,
-					logger: null,
-				};
-				result.logger = new Logger({
+				 const logger = new Logger({
 					active: true,
-					filter: (event) => event.context && event.context.tag === 'cron',
+					filter: (event) => {return event.context && event.context.tag === 'cron'},
 					level: DEBUG,
 					outputs: [
 						() => { result.isCalled = true; },
 					],
 				});
-				return result;
+        const result = {
+          logger,
+          isCalled: false
+        }
+				return result
 			};
 			it('should create a logger with the filter', () => {
 				const result = createLogger();
 				const { logger } = result;
 				logger.info('Executed cron jobs', { tag: 'cron' });
+        console.log(logger.filter)
 				expect(result.isCalled).toBe(true);
 			});
 			it('should create a logger with the filter', () => {
@@ -200,23 +202,23 @@ describe('new Logger(options)', () => {
 	describe('with options.outputs', () => {
 		describe('with options.outputs = undefined', () => {
 			it('should not throw an error', () => {
-				let logger;
+				let logger:Logger;
 				expect(() => { logger = new Logger({}); }).not.toThrow();
-				expect(logger).toBeDefined();
+				expect(logger!).toBeDefined();
 			});
 		});
 		describe('with options.outputs = []', () => {
 			it('should throw an error', () => {
-				let logger;
+				let logger:Logger;
 				expect(() => { logger = new Logger({ outputs: [] }); }).toThrow();
-				expect(logger).toBeUndefined();
+				expect(logger!).toBeUndefined();
 			});
 		});
 	});
 
 	describe('debug(string, object)', () => {
 		it('should log a debug message', () => {
-			let logEvent = null;
+			let logEvent!:LoggerEvent;
 			const message = 'Hello World';
 			const logger = new Logger({
 				active: true,
@@ -232,7 +234,7 @@ describe('new Logger(options)', () => {
 
 	describe('error(string, object)', () => {
 		it('should log an error message', () => {
-			let logEvent = null;
+      let logEvent!:LoggerEvent;
 			const message = 'Something failed';
 			const logger = new Logger({
 				active: true,
@@ -248,7 +250,7 @@ describe('new Logger(options)', () => {
 
 	describe('error(Error)', () => {
 		it('should log an error', () => {
-			let event = null;
+			let event!:LoggerEvent;
 			const logger = new Logger({
 				active: true,
 				level: ERROR,
@@ -264,7 +266,7 @@ describe('new Logger(options)', () => {
 
 	describe('fatal(string, object)', () => {
 		it('should log a fatal error message', () => {
-			let logEvent = null;
+      let logEvent!:LoggerEvent;
 			const message = 'Something failed';
 			const logger = new Logger({
 				active: true,
@@ -280,7 +282,7 @@ describe('new Logger(options)', () => {
 
 	describe('fatal(Error)', () => {
 		it('should log an error', () => {
-			let event = null;
+      let event!:LoggerEvent;
 			const logger = new Logger({
 				active: true,
 				level: FATAL,
@@ -296,7 +298,7 @@ describe('new Logger(options)', () => {
 
 	describe('info(string, object)', () => {
 		it('should log an informational message', () => {
-			let logEvent = null;
+      let logEvent!:LoggerEvent;
 			const message = 'Sky is blue';
 			const logger = new Logger({
 				active: true,
@@ -322,7 +324,7 @@ describe('new Logger(options)', () => {
 	});
 
 	describe('log(level: string, message: string, context: ?object)', () => {
-		let logEvent = null;
+    let logEvent!:LoggerEvent;
 		const message = 'Sky is blue';
 		const context = { color: 'blue' };
 		const logger = new Logger({
@@ -378,7 +380,7 @@ describe('new Logger(options)', () => {
 
 	describe('warn(string, object)', () => {
 		it('should log a warning message', () => {
-			let logEvent = null;
+      let logEvent!:LoggerEvent;
 			const message = 'Something happened';
 			const logger = new Logger({
 				active: true,
