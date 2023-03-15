@@ -9,7 +9,7 @@ import {
   Logger,
 } from '../src';
 import consoleOutput from '../src/outputs/consoleOutput';
-import { LoggerContext } from '../src/struct';
+import { LoggerContext, LoggerEvent } from '../src/struct';
 
 function createPayload() {
   return {
@@ -19,8 +19,8 @@ function createPayload() {
 }
 
 describe('new Logger({ outputs: [ consoleOutput() ] })', () => {
-  const entries = [];
-  const formatter:(option:{message:string, context:LoggerContext})=>string = ({ message, context }) => JSON.stringify({ message, context });
+  const entries:string[] = [];
+  const formatter:(option: Partial<LoggerEvent>)=>string = ({ message, context }) => JSON.stringify({ message, context });
 
   const output = consoleOutput({
     entries,

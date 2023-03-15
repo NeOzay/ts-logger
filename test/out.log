@@ -1,0 +1,26 @@
+[15/03/2023] [22:31:32] INFO [main] : start
+[15/03/2023] [22:31:32] INFO [main] : end ; {"logger":{"active":true,"defaultContext":null,"filter":null,"level":0,"name":"main","outputs":[null,null]}}
+[15/03/2023] [22:31:32] ERROR [main] : Error: my litlle error
+    at Object.<anonymous> (C:\Users\colpa\IdeaProjects\ts-logger\test\t.ts:15:14)
+    at Module._compile (node:internal/modules/cjs/loader:1226:14)
+    at Module.m._compile (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1280:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1089:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:930:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at phase4 (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:649:14)
+    at bootstrap (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:95:10)
+[15/03/2023] [22:33:30] INFO [main] : start
+[15/03/2023] [22:33:30] ERROR [main] : Error
+    at Object.<anonymous> (C:\Users\colpa\IdeaProjects\ts-logger\test\t.ts:15:14)
+    at Module._compile (node:internal/modules/cjs/loader:1226:14)
+    at Module.m._compile (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1280:10)
+    at Object.require.extensions.<computed> [as .ts] (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1089:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:930:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:81:12)
+    at phase4 (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:649:14)
+    at bootstrap (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:95:10)
+[15/03/2023] [22:33:30] INFO [main] : end ; {"logger":{"active":true,"defaultContext":null,"filter":null,"level":0,"name":"main","outputs":[null,null]}}

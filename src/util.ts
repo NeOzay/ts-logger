@@ -25,8 +25,8 @@ export function defaultFormatter(event:LoggerEvent): string {
     message,
     timestamp,
   } = event;
-
-  let out = `${new Date(timestamp).toISOString()} ${levelToString(level)} [${logger}] : ${message}`;
+  const date = new Date(timestamp)
+  let out = `[${date.toLocaleDateString()}] [${date.toLocaleTimeString()}] ${levelToString(level)} [${logger}] : ${message}`;
 
   if (context) {
     out += ` ; ${JSON.stringify(context)}`;

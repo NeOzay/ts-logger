@@ -1,25 +1,17 @@
-import { DEBUG, Logger } from "../src";
+import { consoleOutput, DEBUG, fileOutput, Logger } from "../src";
 
-const createLogger = () => {
-  const result: {
-    logger?: Logger
-    isCalled: boolean
-  } = {
-    isCalled: false
-  };
-  result.logger = new Logger({
+
+ const logger:Logger = new Logger({
     active: true,
     //filter: (event) => { return event.context && event.context.tag === 'cron' },
     level: DEBUG,
+    name: "main",
     outputs: [
-      () => { result.isCalled = true; },
-      (e) => { console.log(e.message) }
+      fileOutput({path:"test/out.log"}),
+      consoleOutput()
     ],
   });
-  return <Required<typeof result>>result;
-};
-const result = createLogger();
-const { logger } = result;
-logger.info('Executed cron jobs', { tag: 'cron' });
-console.log(result.isCalled)
+logger.info("start")
+logger.error(new Error())
+logger.info("end", {logger})
 //expect(result.isCalled).toBe(true);

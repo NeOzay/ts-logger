@@ -8,10 +8,8 @@ import Levels, {
 } from './levels';
 import consoleOutput from './outputs/consoleOutput';
 import { LoggerContext, LoggerEvent, LoggerOptions } from './struct';
-import { getErrorDetails } from './util';
 
-
-const defaultOptions:LoggerOptions = {
+const defaultOptions: LoggerOptions = {
   active: true,
   defaultContext: null,
   filter: null,
@@ -22,13 +20,13 @@ const defaultOptions:LoggerOptions = {
 
 class Logger {
   active: boolean
-  defaultContext?: LoggerContext|null
+  defaultContext?: LoggerContext | null
   filter?: LoggerOptions["filter"]
   level: Levels
   name: string
-  outputs: ((event:LoggerEvent)=>void)[]
-  
-  constructor(options:Partial<LoggerOptions> | null | undefined) {
+  outputs: ((event: LoggerEvent) => void)[]
+
+  constructor(options: Partial<LoggerOptions> | null | undefined) {
     // Use default options.
     const opts = { ...defaultOptions, ...options };
 
@@ -58,40 +56,36 @@ class Logger {
   /**
    * Logs a debug message.
    */
-  debug(message:string, context?:LoggerContext) {
+  debug(message: string, context?: LoggerContext) {
     this.log(DEBUG, message, context);
   }
 
   /**
    * Logs an error message.
    */
-  error(messageOrError:string|Error, context?:LoggerContext) {
-    const ctx = context || {};
-    let message:string
+  error(messageOrError: string | Error, context?: LoggerContext) {
+    let message: string
 
     if (messageOrError instanceof Error) {
-      message = messageOrError.message;
-      ctx.error = getErrorDetails(messageOrError);
+      message = messageOrError.stack ?? messageOrError.message
     } else {
       message = messageOrError
     }
-    this.log(ERROR, message, ctx);
+    this.log(ERROR, message, context);
   }
 
   /**
    * Logs a fatal error message.
    */
-  fatal(messageOrError:string|Error, context?:LoggerContext) {
-    const ctx = context || {};
-    let message:string
+  fatal(messageOrError: string | Error, context?: LoggerContext) {
+    let message: string
 
     if (messageOrError instanceof Error) {
-      message = messageOrError.message;
-      ctx.error = getErrorDetails(messageOrError);
+      message = messageOrError.stack ?? messageOrError.message
     } else {
       message = messageOrError
     }
-    this.log(FATAL, message, ctx);
+    this.log(ERROR, message, context);
   }
 
   /**
@@ -111,7 +105,7 @@ class Logger {
   /**
    * Logs an informational message.
    */
-  info(message: string, context?:LoggerContext) {
+  info(message: string, context?: LoggerContext) {
     this.log(INFO, message, context);
   }
 
@@ -125,14 +119,14 @@ class Logger {
   /**
    * Logs a message with a certain level.
    */
-  log(level: Levels, message: string, context?:LoggerContext) {
+  log(level: Levels, message: string, context?: LoggerContext) {
     // Ignore if logger is not active or if log level is higher.
     if (!this.isActive() || level < this.level) {
       return;
     }
 
     // Prepare log event.
-    const event:LoggerEvent = {
+    const event: LoggerEvent = {
       context: this.defaultContext ? { ...this.defaultContext, ...context } : context,
       level,
       logger: this.name,
@@ -168,7 +162,7 @@ class Logger {
   /**
    * Logs a warning message.
    */
-  warn(message: string, context?:LoggerContext) {
+  warn(message: string, context?: LoggerContext) {
     this.log(WARN, message, context);
   }
 }

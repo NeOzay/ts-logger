@@ -5,9 +5,10 @@
   "main": "./dist/index.ts",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --config jest.config.ts",
     "build": "tsc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
   },
   "author": "Ozay",
   "license": "ISC",
