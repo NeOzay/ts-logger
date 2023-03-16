@@ -24,3 +24,16 @@
     at phase4 (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:649:14)
     at bootstrap (C:\Users\colpa\AppData\Roaming\npm\node_modules\ts-node\src\bin.ts:95:10)
 [15/03/2023] [22:33:30] INFO [main] : end ; {"logger":{"active":true,"defaultContext":null,"filter":null,"level":0,"name":"main","outputs":[null,null]}}
+[3/16/2023] [6:55:56 AM] INFO [main] : start
+[3/16/2023] [6:55:56 AM] ERROR [main] : Error
+    at Object.<anonymous> (/home/ozay/project/ts-logger/test/t.ts:15:14)
+    at Module._compile (node:internal/modules/cjs/loader:1275:14)
+    at Module.m._compile (/usr/lib/node_modules/ts-node/src/index.ts:1618:23)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1329:10)
+    at Object.require.extensions.<computed> [as .ts] (/usr/lib/node_modules/ts-node/src/index.ts:1621:12)
+    at Module.load (node:internal/modules/cjs/loader:1133:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:972:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
+    at phase4 (/usr/lib/node_modules/ts-node/src/bin.ts:649:14)
+    at bootstrap (/usr/lib/node_modules/ts-node/src/bin.ts:95:10)
+[3/16/2023] [6:55:56 AM] INFO [main] : end ; {"logger":{"active":true,"defaultContext":null,"filter":null,"level":0,"name":"main","outputs":[null,null]}}

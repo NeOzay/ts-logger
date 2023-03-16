@@ -102,7 +102,6 @@ describe('new Logger(options)', () => {
 				const result = createLogger();
 				const { logger } = result;
 				logger.info('Executed cron jobs', { tag: 'cron' });
-        console.log(logger.filter)
 				expect(result.isCalled).toBe(true);
 			});
 			it('should create a logger with the filter', () => {
@@ -253,14 +252,14 @@ describe('new Logger(options)', () => {
 			let event!:LoggerEvent;
 			const logger = new Logger({
 				active: true,
-				level: ERROR,
+				//level: ERROR,
 				outputs: [(ev) => { event = ev; }],
 			});
 			const error = new Error('Something failed');
 			logger.error(error);
 			expect(event).not.toBeNull();
 			expect(event.level).toBe(ERROR);
-			expect(event.message).toBe(error.message);
+			expect(event.message).toBe(error.stack);
 		});
 	});
 
@@ -292,7 +291,7 @@ describe('new Logger(options)', () => {
 			logger.fatal(error);
 			expect(event).not.toBeNull();
 			expect(event.level).toBe(FATAL);
-			expect(event.message).toBe(error.message);
+			expect(event.message).toBe(error.stack);
 		});
 	});
 
