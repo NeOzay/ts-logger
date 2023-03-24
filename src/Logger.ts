@@ -85,7 +85,7 @@ class Logger {
     } else {
       message = messageOrError
     }
-    this.log(ERROR, message, context);
+    this.log(FATAL, message, context);
   }
 
   /**
